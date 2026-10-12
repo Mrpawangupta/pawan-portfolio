@@ -202,13 +202,85 @@ header{transition:background-color .85s cubic-bezier(.22,.7,.2,1),border-color .
 .chapter-light .project-stack>.project.row.reverse .tags span{background:#191820;border-color:#47414e;color:#ece7f0}
 .chapter-light .project-stack>.project.row.reverse .link{color:#b99aff}
 @media(max-width:899px){.chapter-light .project-stack>.project.row.reverse{border-radius:18px}}
+
+/* Feature the first project's deployment pipeline without changing the page theme. */
+.featured-gitops{padding:clamp(24px,3vw,42px);}
+.featured-gitops .featured-content{display:grid;grid-template-columns:minmax(0,1fr) minmax(280px,.9fr);gap:clamp(24px,4vw,58px);align-items:center;}
+.featured-gitops .featured-copy h3{font-size:clamp(21px,2vw,29px);margin:0;}
+.featured-gitops .cols{grid-template-columns:1fr;gap:15px;margin-top:18px;}
+.featured-gitops .tags{margin-top:17px;}
+.deployment-flow{position:relative;display:grid;gap:9px;padding:16px 17px;border:1px solid #293747;border-radius:15px;background:#0c1220;overflow:hidden;isolation:isolate;}
+.deployment-flow::before{content:"";position:absolute;z-index:-1;top:34px;bottom:34px;left:50%;width:2px;transform:translateX(-50%);background:linear-gradient(to bottom,#568aff 0%,#568aff 48%,#25314d 100%);}
+.deployment-flow::after{content:"";position:absolute;z-index:0;left:calc(50% - 4px);top:28px;width:10px;height:10px;border-radius:50%;background:#8cb5ff;box-shadow:0 0 15px 5px #578aff80;animation:flow-pulse 2.6s ease-in-out infinite;pointer-events:none;}
+.deployment-step{position:relative;z-index:1;display:flex;align-items:center;min-height:48px;padding:9px 15px;border:1px solid #2b3955;border-radius:10px;background:#121b30;color:#d8e2f6;font:clamp(10px,1vw,13px)/1.4 var(--mono);transition:transform .25s ease,border-color .25s ease,box-shadow .25s ease;animation:flow-step-in .55s both;}
+.deployment-step:nth-child(1){animation-delay:.05s}.deployment-step:nth-child(2){animation-delay:.13s}.deployment-step:nth-child(3){animation-delay:.21s}.deployment-step:nth-child(4){animation-delay:.29s}.deployment-step:nth-child(5){animation-delay:.37s}
+.deployment-step::before{content:"";position:absolute;left:-5px;width:7px;height:7px;border:2px solid #78a6ff;border-radius:50%;background:#10182a;box-shadow:0 0 9px #578aff80;}
+.deployment-flow:hover .deployment-step{transform:translateX(3px);border-color:#506fae;box-shadow:0 0 18px #568aff16;}
+@keyframes flow-pulse{0%{transform:translate(-50%,0);opacity:.35}50%{opacity:1;box-shadow:0 0 19px 7px #578aff99}100%{transform:translate(-50%,calc(100% + 330px));opacity:.35}}
+@keyframes flow-step-in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.chapter-light .deployment-flow{background:#eeebe3;border-color:#d4cfc5;}
+.chapter-light .deployment-flow::before{background:linear-gradient(to bottom,#58aaff,#97a8c0 52%,#d4cfc5);}
+.chapter-light .deployment-flow::after{background:#48bfe3;box-shadow:0 0 15px 5px #58c9e580;}
+.chapter-light .deployment-step{background:#f8f6f0;border-color:#d4cfc5;color:#45434a;}
+.chapter-light .deployment-step::before{background:#f8f6f0;border-color:#55bfe0;box-shadow:0 0 9px #55bfe066;}
+.chapter-light .deployment-flow:hover .deployment-step{border-color:#83cce0;box-shadow:0 0 18px #58bedd20;}
+@media(max-width:899px){.featured-gitops .featured-content{grid-template-columns:1fr}.deployment-flow{max-width:none}.featured-gitops{padding:24px}}
+@media(prefers-reduced-motion:reduce){.deployment-flow::after,.deployment-step{animation:none}.deployment-flow:hover .deployment-step{transform:none}}
+/* Keep the pipeline motion clean: animate its connector, without floating blue dots. */
+.deployment-flow::after,.deployment-step::before{content:none;display:none;}
+.deployment-flow::before{background:linear-gradient(to bottom,transparent 0%,#78a6ff 38%,#78a6ff 52%,transparent 100%);background-size:100% 220%;animation:flow-line 3.2s linear infinite;}
+@keyframes flow-line{from{background-position:0 0}to{background-position:0 100%}}
+.chapter-light .deployment-flow::before{background:linear-gradient(to bottom,transparent 0%,#58bfe0 38%,#58bfe0 52%,transparent 100%);background-size:100% 220%;}
+@media(prefers-reduced-motion:reduce){.deployment-flow::before{animation:none;background-position:center}}
+/* Compact hero actions with the same outlined round icon treatment as the resume button. */
+.actions .btn:not(.resume-hero){height:42px;gap:9px;padding-inline:13px;font-size:11px;}
+.actions a[href="#work"]::after,.actions a[href="#contact"]::after{content:none;display:none;}
+.action-icon{display:inline-grid;place-items:center;width:23px;height:23px;flex:none;border:1px solid currentColor;border-radius:50%;font-size:13px;line-height:1;transition:transform .25s ease,background-color .25s ease;}
+.actions a[href="#work"]:hover .action-icon{transform:translateY(2px);background:#0712170c;}
+.actions a[href="#contact"]:hover .action-icon{transform:translate(2px,-2px);background:#ffffff0c;}
+@media(max-width:760px){.actions .btn:not(.resume-hero){height:40px;padding-inline:11px}.action-icon{width:21px;height:21px;font-size:12px}}
+@media(prefers-reduced-motion:reduce){.action-icon{transition:none}}
+/* Give the first card's outline index room and keep its workflow clear of the number. */
+.project-stack>.featured-gitops::after{right:clamp(46px,7vw,104px);}
+.featured-gitops{grid-template-columns:minmax(0,1fr);gap:18px;}
+.featured-gitops .featured-copy .number{margin:0 0 15px;}
+.featured-gitops .featured-copy .number small{display:block;margin:7px 0 0;}
+.featured-gitops .deployment-flow{margin-top:48px;}
+@media(max-width:760px){.featured-gitops{grid-template-columns:1fr}.featured-gitops .deployment-flow{margin-top:0}}
+/* Animated, readable stages for the conceptual DevSecOps sequence. */
+.illustrative-flow{display:flex;align-items:center;flex-wrap:wrap;gap:5px 7px;margin-top:8px;color:#5d5a61;font-size:clamp(11px,1vw,14px);line-height:1.8;}
+.flow-stage{white-space:nowrap;}
+.flow-arrow{display:inline-block;color:#7a65c5;font-weight:700;animation:arrow-travel 1.35s ease-in-out infinite;}
+.flow-arrow:nth-of-type(2){animation-delay:.08s}.flow-arrow:nth-of-type(4){animation-delay:.16s}.flow-arrow:nth-of-type(6){animation-delay:.24s}.flow-arrow:nth-of-type(8){animation-delay:.32s}.flow-arrow:nth-of-type(10){animation-delay:.4s}.flow-arrow:nth-of-type(12){animation-delay:.48s}.flow-arrow:nth-of-type(14){animation-delay:.56s}
+@keyframes arrow-travel{0%,100%{opacity:.48;transform:translateX(0)}50%{opacity:1;transform:translateX(3px);text-shadow:0 0 10px #9c79ed77}}
+.chapter-light .illustrative-flow{color:#5d5a61;}
+@media(prefers-reduced-motion:reduce){.flow-arrow{animation:none}}
+/* Improve contact and footer readability on the violet chapter without changing its palette. */
+.chapter-violet .contact{background:linear-gradient(135deg,#e6ddff 0%,#dbceff 58%,#d0bfff 100%);border-color:#5a467f66;box-shadow:inset 0 1px 0 #ffffffb3,0 22px 60px #4f347522;}
+.chapter-violet .contact .contact-grid{border-color:#17142135;}
+.chapter-violet .contact-grid small{color:#53456f;}
+html:has(#contact.chapter-violet) footer{color:#403558;border-color:#17142140;}
+html:has(#contact.chapter-violet) footer .brand{color:#171421;}
+html:has(#contact.chapter-violet) footer .brand small,html:has(#contact.chapter-violet) footer nav a,html:has(#contact.chapter-violet) footer>small,html:has(#contact.chapter-violet) footer>a:last-child{color:#55476d;}
+html:has(#contact.chapter-violet) footer a:hover{color:#171421;}
+.contact-grid>a:nth-child(1) small::before{content:"✉️";margin-right:6px;letter-spacing:0}
+.contact-grid>a:nth-child(2) small::before{content:"📞";margin-right:6px;letter-spacing:0}
+.contact-grid>a:nth-child(3) small::before{content:"💼";margin-right:6px;letter-spacing:0}
+.contact-grid>a:nth-child(4) small::before{content:"🐙";margin-right:6px;letter-spacing:0}
+.contact-grid>div:nth-child(5) small::before{content:"📍";margin-right:6px;letter-spacing:0}
+/* A clean, sequential highlight for the hero deployment flow. */
+.terminal .flow span{animation:hero-flow-node 3.6s ease-in-out infinite;}
+.terminal .flow span:nth-of-type(2){animation-delay:.9s}
+.terminal .flow span:nth-of-type(3){animation-delay:1.8s}
+.terminal .flow span:nth-of-type(4){animation-delay:2.7s}
+.terminal .flow b{animation:hero-flow-arrow 1.2s ease-in-out infinite;}
+.terminal .flow b:nth-of-type(2){animation-delay:.35s}
+.terminal .flow b:nth-of-type(3){animation-delay:.7s}
+@keyframes hero-flow-node{0%,18%,100%{border-color:#34424b;background:#151e24;box-shadow:0 0 0 transparent}8%{border-color:#66d9ef;background:#1a2930;box-shadow:0 0 20px #66d9ef36}}
+@keyframes hero-flow-arrow{0%,100%{opacity:.45;color:#597b85;transform:translateX(0)}50%{opacity:1;color:#66d9ef;transform:translateX(3px);text-shadow:0 0 10px #66d9ef66}}
+@media(prefers-reduced-motion:reduce){.terminal .flow span,.terminal .flow b{animation:none}}
 /* Match the round resume badge across both hero actions and tighten the pipeline rhythm. */
-.actions .btn:not(.resume-hero){gap:11px}
-.actions a[href="#work"]::after,.actions a[href="#contact"]::after{content:"";display:grid;place-items:center;width:26px;height:26px;flex:none;border:1px solid currentColor;border-radius:50%;font-size:15px;line-height:1;transition:transform .28s ease,background-color .28s ease}
-.actions a[href="#work"]::after{content:"↓"}
-.actions a[href="#contact"]::after{content:"↗";font-size:12px}
-.actions a[href="#work"]:hover::after{transform:translateY(2px);background:#0712170c}
-.actions a[href="#contact"]:hover::after{transform:translate(2px,-2px);background:#ffffff0c}
+.actions .btn:not(.resume-hero){gap:9px}
 .terminal .flow{gap:clamp(8px,1vw,16px)}
 .terminal .flow span{width:auto;flex:0 0 clamp(62px,5.2vw,88px);padding:12px 6px;transition:transform .25s ease,border-color .25s ease,background-color .25s ease,box-shadow .25s ease}
 .terminal .flow span:hover{transform:translateY(-3px);border-color:#66d9ef99;background:#18262d;box-shadow:0 8px 24px #66d9ef16}
@@ -224,3 +296,21 @@ body[data-active-chapter="light"] .actions .resume-hero:hover{color:#17171e;bord
 body[data-active-chapter="violet"] .actions .resume-hero{color:#171421;border-color:#17142155}
 body[data-active-chapter="violet"] .actions .resume-hero:hover{background:#a98beb;border-color:#171421}
 @media(max-width:760px){.actions .resume-hero{min-height:45px;padding-inline:16px;gap:10px}}
+/* Animated blue monitoring bars, while keeping the portfolio's existing light/dark chapter theme. */
+.chart{overflow:hidden}
+.chart-bars{display:flex;height:100%;align-items:flex-end;justify-content:space-between;gap:clamp(5px,1vw,12px);padding:8px 12px 0}
+.chart-bars span{display:block;flex:1;min-width:7px;height:var(--bar-height);transform-origin:center bottom;border-radius:5px 5px 0 0;background:linear-gradient(180deg,#5f91ff 0%,#4778eb 54%,#2c427d 100%);box-shadow:0 0 16px #4d7eff26;animation:monitor-bar-breathe 1.75s ease-in-out var(--bar-delay,0ms) infinite alternate}
+@keyframes monitor-bar-breathe{0%{transform:scaleY(.68) translateY(2px);filter:brightness(.88)}100%{transform:scaleY(1) translateY(-2px);filter:brightness(1.12)}}
+@media(prefers-reduced-motion:reduce){.chart-bars span{animation:none}}
+/* Full-width, continuously looping toolkit ticker, matching the supplied reference. */
+#toolkit{--toolkit-gutter:clamp(30px,5vw,96px)}
+@media(max-width:760px){#toolkit{--toolkit-gutter:7vw}}
+@media(max-width:430px){#toolkit{--toolkit-gutter:22px}}
+.tool-marquee{width:calc(100% + var(--toolkit-gutter) + var(--toolkit-gutter));margin:15px 0 29px calc(0px - var(--toolkit-gutter));overflow:hidden;border-top:1px solid #d2cdc3;border-bottom:1px solid #d2cdc3;background-color:#f1eee6;background-image:linear-gradient(#77716b0a 1px,transparent 1px),linear-gradient(90deg,#77716b0a 1px,transparent 1px);background-size:48px 48px;}
+.tool-marquee-track{display:flex;width:max-content;animation:tool-marquee-scroll 34s linear infinite;will-change:transform}
+.tool-marquee-group{display:flex;flex:0 0 auto;align-items:center;gap:clamp(32px,4vw,66px);padding:10px clamp(28px,3vw,48px);}
+.tool-marquee-group span{flex:none;color:#45434a;font:500 clamp(13px,1.15vw,18px)/1.2 var(--mono);white-space:nowrap;}
+.tool-marquee:hover .tool-marquee-track{animation-play-state:paused}
+@keyframes tool-marquee-scroll{to{transform:translateX(-50%)}}
+@media(max-width:760px){.tool-marquee{margin-top:12px;margin-bottom:24px}.tool-marquee-group{gap:34px;padding-block:9px}}
+@media(prefers-reduced-motion:reduce){.tool-marquee-track{animation:none}}
