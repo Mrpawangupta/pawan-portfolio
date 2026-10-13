@@ -29,8 +29,7 @@ heroCursor.className = "hero-cursor";
 heroCursor.setAttribute("aria-hidden", "true");
 heroCursor.innerHTML = "<i></i>";
 document.body.append(heroCursor);
-const heroPointer = window.matchMedia("(hover: hover) and (pointer: fine)");
-if (heroPointer.matches) {
+if (window.matchMedia("(hover: hover) and (pointer: fine)").matches) {
   const heroHeading = document.querySelector(".hero h1");
   let cursorFrame = 0;
   let cursorX = 0;
