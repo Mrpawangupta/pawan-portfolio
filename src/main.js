@@ -32,10 +32,19 @@ document.body.append(heroCursor);
 const heroPointer = window.matchMedia("(hover: hover) and (pointer: fine)");
 if (heroPointer.matches) {
   const heroHeading = document.querySelector(".hero h1");
+  let cursorFrame = 0;
+  let cursorX = 0;
+  let cursorY = 0;
   heroHeading.addEventListener("pointerenter", () => heroCursor.classList.add("is-visible"));
   heroHeading.addEventListener("pointermove", event => {
-    heroCursor.style.left = `${event.clientX}px`;
-    heroCursor.style.top = `${event.clientY}px`;
+    cursorX = event.clientX;
+    cursorY = event.clientY;
+    if (cursorFrame) return;
+    cursorFrame = requestAnimationFrame(() => {
+      heroCursor.style.setProperty("--cursor-x", `${cursorX}px`);
+      heroCursor.style.setProperty("--cursor-y", `${cursorY}px`);
+      cursorFrame = 0;
+    });
   });
   heroHeading.addEventListener("pointerleave", () => heroCursor.classList.remove("is-visible"));
 }
@@ -49,7 +58,7 @@ document.querySelector("#year").textContent = new Date().getFullYear();
 const nav = document.querySelector("#nav"), toggle = document.querySelector(".toggle");
 toggle.addEventListener("click", () => { const open = toggle.getAttribute("aria-expanded") !== "true"; toggle.setAttribute("aria-expanded", String(open)); toggle.setAttribute("aria-label", open ? "Close navigation" : "Open navigation"); nav.classList.toggle("open", open); });
 nav.querySelectorAll("a").forEach(a => a.addEventListener("click", () => { nav.classList.remove("open"); toggle.setAttribute("aria-expanded", "false"); toggle.setAttribute("aria-label", "Open navigation"); }));
-const resumeLink = document.createElement("a"); resumeLink.href = "./resume.pdf"; resumeLink.textContent = "↓"; resumeLink.className = "resume-download"; resumeLink.setAttribute("download", "Pawan-Kumar-Resume.pdf"); resumeLink.setAttribute("aria-label", "Download resume PDF"); resumeLink.title = "Download resume";
+const resumeLink = document.createElement("a"); resumeLink.href = "./Pawan-Kumar-Resume.pdf"; resumeLink.textContent = "↓"; resumeLink.className = "resume-download"; resumeLink.setAttribute("download", "Pawan-Kumar-Resume.pdf"); resumeLink.setAttribute("aria-label", "Download resume PDF"); resumeLink.title = "Download resume";
 const hireLink = nav.querySelector(".navcta"); hireLink.textContent = "Hire me"; hireLink.setAttribute("aria-label", "Go to contact section");
 const headerActions = document.createElement("div"); headerActions.className = "header-actions"; headerActions.append(resumeLink, hireLink);
 const header = document.querySelector("header");
@@ -57,15 +66,15 @@ const placeHeaderActions = isMobile => { (isMobile ? nav : header).append(header
 const mobileHeader = window.matchMedia("(max-width: 760px)");
 placeHeaderActions(mobileHeader.matches);
 mobileHeader.addEventListener("change", event => placeHeaderActions(event.matches));
-fetch("./resume.pdf", { method: "HEAD" }).then(response => { if (!response.ok) resumeLink.addEventListener("click", event => { event.preventDefault(); document.querySelector("#resume").showModal(); }); }).catch(() => resumeLink.addEventListener("click", event => { event.preventDefault(); document.querySelector("#resume").showModal(); }));
+fetch("./Pawan-Kumar-Resume.pdf", { method: "HEAD" }).then(response => { if (!response.ok) resumeLink.addEventListener("click", event => { event.preventDefault(); document.querySelector("#resume").showModal(); }); }).catch(() => resumeLink.addEventListener("click", event => { event.preventDefault(); document.querySelector("#resume").showModal(); }));
 document.querySelector(".project.row.reverse").insertAdjacentHTML("afterend", `
   <article class="project added-project">
     <div class="added-top"><div class="number">04 <small>DEVSECOPS · CI/CD</small></div></div>
     <h3>End-to-end DevSecOps CI/CD pipeline</h3>
     <p class="added-lede">A focused case study of the CI security integrations and Kubernetes delivery documented in my experience.</p>
-    <div class="added-columns"><div><small>DOCUMENTED CONTRIBUTION</small><p>Integrated SonarQube and Trivy scanning into CI pipelines, implemented Jenkins and Argo CD pipelines across 8+ microservices, and optimized Docker images with multi-stage builds.</p></div><div><small>ILLUSTRATIVE FLOW</small><p>Git → Jenkins → SonarQube → Container build → Trivy scan → Registry → Argo CD → EKS</p></div></div>
+    <div class="added-columns"><div><small>DOCUMENTED CONTRIBUTION</small><p>Integrated SonarQube and Trivy scanning into CI pipelines, implemented Jenkins and Argo CD pipelines across 8+ microservices, and optimized Docker images with multi-stage builds.</p></div><div><small>ILLUSTRATIVE FLOW</small><div class="illustrative-flow" role="img" aria-label="Conceptual CI/CD flow: Git, Jenkins, SonarQube, container build, Trivy scan, registry, Argo CD, EKS"><span class="flow-stage">Git</span><span class="flow-arrow">→</span><span class="flow-stage">Jenkins</span><span class="flow-arrow">→</span><span class="flow-stage">SonarQube</span><span class="flow-arrow">→</span><span class="flow-stage">Container build</span><span class="flow-arrow">→</span><span class="flow-stage">Trivy scan</span><span class="flow-arrow">→</span><span class="flow-stage">Registry</span><span class="flow-arrow">→</span><span class="flow-stage">Argo CD</span><span class="flow-arrow">→</span><span class="flow-stage">EKS</span></div></div></div>
     <p class="added-note">Conceptual stage sequence; the resume confirms the tools and integrations, not this exact job order or registry.</p>
-    <div class="tags project-tools">Jenkins <span>SonarQube</span><span>Trivy</span><span>Docker</span><span>Argo CD</span><span>AWS EKS</span></div>
+    <div class="tags project-tools"><span>Jenkins</span><span>SonarQube</span><span>Trivy</span><span>Docker</span><span>Argo CD</span><span>AWS EKS</span></div>
   </article>
   <article class="project added-project gitops-project">
     <div class="added-top"><div class="number">05 <small>GITOPS · RELEASES</small></div></div>
@@ -73,7 +82,7 @@ document.querySelector(".project.row.reverse").insertAdjacentHTML("afterend", `
     <p class="added-lede">Consistent microservice deployments across development, QA, and production, using Helm charts with environment-specific values.</p>
     <div class="gitops-flow"><span>Git desired state</span><b>→</b><span>Argo CD sync</span><b>→</b><span>Helm release</span><b>→</b><span>Dev · QA · Prod</span></div>
     <p class="added-note">Based on the documented GitOps platform and Helm work. The flow above is a conceptual illustration.</p>
-    <div class="tags project-tools">Argo CD <span>Helm</span><span>Kubernetes</span><span>AWS EKS</span></div>
+    <div class="tags project-tools"><span>Argo CD</span><span>Helm</span><span>Kubernetes</span><span>AWS EKS</span></div>
   </article>`);
 const firstProject = document.querySelector("#work > .project");
 const projectStack = document.createElement("div");
