@@ -10,7 +10,7 @@ From this directory, run `python -m http.server 4173` and visit http://localhost
 
 ## Resume PDF
 
-The supplied workspace did not include the resume PDF. Place the original, unmodified file at the site root as `resume.pdf`. The navigation link checks for the file and shows a setup note while it is absent.
+The current resume is included at the site root as `Pawan-Kumar-Resume.pdf`. The portfolio download links use this filename directly, so the downloaded file keeps the requested name. To publish a newer resume, replace this PDF with the updated file in the repository root.
 
 ## Live site
 
